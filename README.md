@@ -9,7 +9,7 @@ This script resizes the `STATE`, `KERN-C`, and `ROOT-C` partitions rather than c
 
 The `KERN-C` (`/dev/sda6`) and `ROOT-C` (`/dev/sda7`) partitions can be repurposed for a new operating system (where `ROOT-C` is the root partition and `KERN-C` is the boot partition) by allocating more space to them.
 
-Using this script will **delete all data** on the `STATE`, `KERN-C`, and `ROOT-C` partitions, **including any downloads and files Chrome OS uses**. Back up that data if it is imporatnt to you.
+Using this script will **delete all data** on the `STATE`, `KERN-C`, and `ROOT-C` partitions, **including any downloads and files Chrome OS uses**. Back up that data if it is important to you.
 
 By resizing the three partitions, space will (in most use cases) be taken from the `STATE` partition (which is where Chrome OS stores its data) and be reallocated to the `KERN-C` and `ROOT-C` partitions.
 
@@ -38,8 +38,8 @@ $ cd ~/Downloads/ && \
 
 ## Authors
 
-Ethan Madison <ethan@ethanmad.com>
-Eric Hegnes   <eric.hegnes@gmail.com>
+Ethan Madison: <ethan@ethanmad.com><br>
+Eric Hegnes:   <eric.hegnes@gmail.com>
 
 
 ## License
