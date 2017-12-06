@@ -44,7 +44,7 @@ echo
 # Check if developer mode is enabled
 FW_TYPE="$(crossystem mainfw_type)"
 if [ ! "$FW_TYPE" = "developer" ] ; then
-    error "ERROR: You're Chromebook is not running a developer BIOS!"
+    error "ERROR: Your Chromebook is not running a developer BIOS!"
     echo -e "You need to run \`# chromeos-firmwareupdate --mode=todev\`
 and then re-run this script."
     exit
