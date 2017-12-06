@@ -27,13 +27,13 @@ Allocating less space to `STATE` and `KERN-C` will result in a larger `ROOT-C` p
 
 First, [enable Developer Mode](http://www.chromium.org/chromium-os/poking-around-your-chrome-os-device#TOC-Putting-your-Chrome-OS-Device-into-Developer-Mode) on your Chrome OS device.
 
-Next, [get to a command prompt](http://www.chromium.org/chromium-os/poking-around-your-chrome-os-device#TOC-Getting-to-a-command-prompt).
-From the command prompt, download and run [`cros-resize.sh`](https://github.com/ethanmad/chromeos-resize/blob/master/cros-resize.sh).
+Next, [get to the shell](http://www.chromium.org/chromium-os/poking-around-your-chrome-os-device#TOC-Getting-to-a-command-prompt) by pressing <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> then typing "shell" at the prompt.
+Once at the shell: download, read, and run [`cros-resize.sh`](https://github.com/ethanmad/chromeos-resize/blob/master/cros-resize.sh).
 
 ```bash
-$ cd ~/Downloads/ && \
-  curl https://raw.githubusercontent.com/ethanmad/chromeos-resize/master/cros-resize.sh && \
-  sudo bash cros-resize.sh
+$ cd ~/Downloads/
+$ curl https://raw.githubusercontent.com/ethanmad/chromeos-resize/master/cros-resize.sh
+$ sudo bash cros-resize.sh
 ```
 
 ## Authors
