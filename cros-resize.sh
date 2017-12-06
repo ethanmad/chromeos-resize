@@ -3,8 +3,9 @@
 # Authors: Ethan Madison <ethan@ethanmad.com>
 #          Eric Hegnes <eric.hegnes@gmail.com>
 
-# Description: This program repartitions Chrome OS to accomodate a second
-#              operating system.
+# Description: This program resizes Chrome OS partitions without
+#              altering the enforced partition layout/scheme.
+#              Typically used to accomodate a second operating system.
 
 # License: GPLv3
 # This program is free software: you can redistribute it and/or modify
