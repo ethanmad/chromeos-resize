@@ -22,10 +22,10 @@ Originally created to serve the [Chromebook Pixel 2015 (samus) Linux community](
 
 Dual/multi-booting Chrome OS alongside other operating system(s) is useful for a number of reason:
 
-(0) Only Chrome OS can provide firmware updates to Chrome OS devices.
-(1) Chrome OS can run Android apps, offers excellent battery life, and works out-of-the-box without issues.
-(2) Other operating systems can provide access to other types of software, a better development environment, more system control, etc.
-(3) Natively installing another operating system can be more convenient or efficient than running one through e.g., [crouton](https://github.com/dnschneid/crouton) or connecting to another machine via ssh.
+1) Only Chrome OS can provide firmware updates to Chrome OS devices.
+2) Chrome OS can run Android apps, offers excellent battery life, and works out-of-the-box without issues.
+3) Other operating systems can provide access to other types of software, a better development environment, more system control, etc.
+4) Natively installing another operating system can be more convenient or efficient than running one through e.g., [crouton](https://github.com/dnschneid/crouton) or connecting to another machine via ssh.
 
 `chromeos-resize` can also be used to revert from a multi-boot system to one with only Chrome OS, or other variations.
 If, somehow, space on the disk was lost by another resizing, this will fix it.
