@@ -6,7 +6,7 @@ Typically, this will be used to dual/multi-boot Chrome OS and another operating 
 Chrome OS enforces a particular disk layout and will "repair" its installation by formatting the disk and reinstalling if a partition is added or removed.
 This script resizes the partitions rather than creating new partitions to avoid triggering the "repair".
 
-[![Chrome OS Device Disk Layout](https://www.chromium.org/_/rsrc/1284148304249/chromium-os/chromiumos-design-docs/disk-format/layout.png)](https://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format)
+[![Chrome OS device disk layout chart from The Chromium Projects "Disk Layout" page](https://www.chromium.org/_/rsrc/1284148304249/chromium-os/chromiumos-design-docs/disk-format/layout.png "Chrome OS device disk layout from The Chromium Projects \"Disk Layout\" page. The green partiton labeled \"Encrypted user data\" is where Chrome OS stores user data. The grey partitions labeled \"Unused Kernel C\" and \"Unused Rootfs C\" are ideal places to put another operating system. Click to learn more.")](https://www.chromium.org/chromium-os/chromiumos-design-docs/disk-format)
 
 As shown in the chart, the kernel C (partition 6) and rootfs C (partition 7) partitions are unused by the device, so we can safely resize (and use) them.
 The user state partition (green, labeled "Encrypted user data") is used by Chrome OS to store user files, extensions, Android apps, etc.
