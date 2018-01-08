@@ -71,10 +71,27 @@ partition (Chrome OS's data partition). You will specify how much size to
 allocate to the STATE partition and KERN-C, and the rest of the space will be
 allocated to ROOT-C.
 There are $AVAILABLE_SZ_MB MiB ($AVAILABLE_SZ_GB GiB) available to work with.
-The sum of the following two partition sizes must be less than this amount."
+The sum of the following two partition sizes must be less than this amount.
+You have the option of modifying your STATE partition using either MiB or GiB(default) precision."
 echo
-STATE_SZ_DEFAULT=5120
-read -e -p "How big should the STATE partition be in MiB (default(equivalent of 5GiB): \
+read -e -p "Would you like to use MiB or GiB? [m/G] " -i "G" STATE_SZ_PRECISION
+if [[ $STATE_SZ_PRECISION == "g" ]] || [[ $STATE_SZ_PRECISION == "G" ]]; then
+   STATE_SZ_PRECISION="GiB"
+elif [[ $STATE_SZ_PRECISION == "m" ]] || [[ $STATE_SZ_PRECISION == "M" ]]; then
+   STATE_SZ_PRECISION="MiB"
+else
+   error: "ERROR: $STATE_SZ_PRECISION is not a valid option."
+   exit 1
+fi
+
+if [[ $STATE_SZ_PRECISION == "GiB" ]]; then
+   STATE_SZ_DEFAULT=5
+else
+   STATE_SZ_DEFAULT=5120
+fi
+echo
+
+read -e -p "How big should the STATE partition be in $STATE_SZ_PRECISION (default: \
 $STATE_SZ_DEFAULT)? " -i $STATE_SZ_DEFAULT STATE
 if ! [[ $STATE =~ $NUM_REGEX ]]; then
    error "ERROR: Not a valid number."
@@ -95,7 +112,7 @@ if ! [[ $KERN =~ $NUM_REGEX ]]; then
 fi
 echo
 
-echo "You chose to allocate $STATE MiB for the state partition and $KERN MiB for
+echo "You chose to allocate $STATE $STATE_SZ_PRECISION for the state partition and $KERN MiB for
 the KERN-C partition. ROOT-C will be allocated to the remaining space available
 space. The size of the STATE and KERN-C partitions must be integers."
 echo
@@ -108,7 +125,11 @@ echo
 
 # Calculate starting sector(s) and size(s)
 STATE_START=$(cgpt show -i 1 -n -b -q $DISK)
-STATE_SZ=$((STATE * 1024 * 2))
+if [[ $STATE_SZ_PRECISION == "GiB" ]]; then
+   STATE_SZ=$((STATE * 1024 * 1024 * 2))
+else
+   STATE_SZ=$((STATE * 1024 * 2))
+fi
 KERN_C_START=$((STATE_START + STATE_SZ))
 KERN_C_SZ=$((KERN * 1024 * 2))
 ROOT_C_START=$((KERN_C_START + KERN_C_SZ))
@@ -120,15 +141,20 @@ if [ $AVAILABLE_SZ -lt $((KERN_C_SZ + ROOT_C_SZ)) ]; then
     exit 1
 fi
 
-STATE_SZ_MB=$STATE
-STATE_SZ_GB=$(awk "BEGIN {printf \"%.2f\",${STATE_SZ_MB} / 1024}")
+if [[ $STATE_SZ_PRECISION == "GiB"]]; then
+   STATE_SZ_MB=$((STATE_SZ * 512 / 1024 / 1024))
+   STATE_SZ_GB=$((STATE_SZ_MB / 1024))
+else
+   STATE_SZ_MB=$STATE
+   STATE_SZ_GB=$(awk "BEGIN {printf \"%.2f\",${STATE_SZ_MB} / 1024}")
+fi
 KERN_C_SZ_MB=$KERN
 KERN_C_SZ_GB=$(awk "BEGIN {printf \"%.2f\",${KERN_C_SZ_MB} / 1024}")
 ROOT_C_SZ_MB=$((ROOT_C_SZ * 512 / 1024 / 1024))
 ROOT_C_SZ_GB=$(awk "BEGIN {printf \"%.2f\",${ROOT_C_SZ_MB} / 1024}")
 
-echo "STATE will be allocated $STATE_SZ sectors, $STATE_SZ_MB MiB, or $STATE_SZ_GB GiB."
-echo "KERN-C will be allocated $KERN_C_SZ sectors, or $KERN_C_SZ_MB MiB, or $KERN_C_SZ_GB, GiB."
+echo "STATE will be allocated $STATE_SZ sectors, or $STATE_SZ_MB MiB, or $STATE_SZ_GB GiB."
+echo "KERN-C will be allocated $KERN_C_SZ sectors, or $KERN_C_SZ_MB MiB, or $KERN_C_SZ_GB GiB."
 echo "ROOT-C will be allocated $ROOT_C_SZ sectors, or $ROOT_C_SZ_MB MiB, or $ROOT_C_SZ_GB GiB."
 warn "Afer this point, your disk will be repartitioned and wiped."
 echo
