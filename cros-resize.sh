@@ -73,8 +73,8 @@ allocated to ROOT-C.
 There are $AVAILABLE_SZ_MB MiB ($AVAILABLE_SZ_GB GiB) available to work with.
 The sum of the following two partition sizes must be less than this amount."
 echo
-STATE_SZ_DEFAULT=5
-read -e -p "How big should the STATE partition be in GiB (default: \
+STATE_SZ_DEFAULT=5120
+read -e -p "How big should the STATE partition be in MiB (default(equivalent of 5GiB): \
 $STATE_SZ_DEFAULT)? " -i $STATE_SZ_DEFAULT STATE
 if ! [[ $STATE =~ $NUM_REGEX ]]; then
    error "ERROR: Not a valid number."
@@ -95,7 +95,7 @@ if ! [[ $KERN =~ $NUM_REGEX ]]; then
 fi
 echo
 
-echo "You chose to allocate $STATE GiB for the state partition and $KERN MiB for
+echo "You chose to allocate $STATE MiB for the state partition and $KERN MiB for
 the KERN-C partition. ROOT-C will be allocated to the remaining space available
 space. The size of the STATE and KERN-C partitions must be integers."
 echo
@@ -108,7 +108,7 @@ echo
 
 # Calculate starting sector(s) and size(s)
 STATE_START=$(cgpt show -i 1 -n -b -q $DISK)
-STATE_SZ=$((STATE * 1024 * 1024 * 2))
+STATE_SZ=$((STATE * 1024 * 2))
 KERN_C_START=$((STATE_START + STATE_SZ))
 KERN_C_SZ=$((KERN * 1024 * 2))
 ROOT_C_START=$((KERN_C_START + KERN_C_SZ))
@@ -120,8 +120,8 @@ if [ $AVAILABLE_SZ -lt $((KERN_C_SZ + ROOT_C_SZ)) ]; then
     exit 1
 fi
 
-STATE_SZ_MB=$((STATE_SZ * 512 / 1024 / 1024))
-STATE_SZ_GB=$((STATE_SZ_MB / 1024))
+STATE_SZ_MB=$STATE
+STATE_SZ_GB=$(awk "BEGIN {printf \"%.2f\",${STATE_SZ_MB} / 1024}")
 KERN_C_SZ_MB=$KERN
 KERN_C_SZ_GB=$(awk "BEGIN {printf \"%.2f\",${KERN_C_SZ_MB} / 1024}")
 ROOT_C_SZ_MB=$((ROOT_C_SZ * 512 / 1024 / 1024))
