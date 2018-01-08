@@ -141,7 +141,7 @@ if [ $AVAILABLE_SZ -lt $((KERN_C_SZ + ROOT_C_SZ)) ]; then
     exit 1
 fi
 
-if [[ $STATE_SZ_PRECISION == "GiB"]]; then
+if [[ $STATE_SZ_PRECISION == "GiB" ]]; then
    STATE_SZ_MB=$((STATE_SZ * 512 / 1024 / 1024))
    STATE_SZ_GB=$((STATE_SZ_MB / 1024))
 else
