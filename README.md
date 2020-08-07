@@ -51,9 +51,9 @@ Allocating less space to the user state and kernel C partitions will result in a
 
 ### Resizing
 
-First, [enable Developer Mode](http://www.chromium.org/chromium-os/poking-around-your-chrome-os-device#TOC-Putting-your-Chrome-OS-Device-into-Developer-Mode) on your Chrome OS device.
+First, [enable Developer Mode](https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md#dev-mode) on your Chrome OS device.
 
-Next, [get to the shell](http://www.chromium.org/chromium-os/poking-around-your-chrome-os-device#TOC-Getting-to-a-command-prompt) by pressing <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> then typing "shell" at the prompt.
+Next, [get to the shell](https://chromium.googlesource.com/chromiumos/docs/+/master/developer_mode.md#crosh) by pressing <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd> then typing "shell" at the prompt.
 Once at the shell: download, read, and run [`cros-resize.sh`](https://github.com/ethanmad/chromeos-resize/blob/master/cros-resize.sh).
 
 ```bash
